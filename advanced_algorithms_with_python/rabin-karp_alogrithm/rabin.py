@@ -3,7 +3,9 @@ def polynomial_hash(s):
   for i in range(len(s)):
     hash_value += (ord(s[i])*(26**(len(s) - i - 1)))
   return hash_value
-
+# s - the substring
+# H - polynomial hash of s
+# c - the next character
 def polynomial_rolling_hash(s, H, c):
   return (H - ord(s[0]) * 26**(len(s) - 1)) * 26 + ord(c)
 
