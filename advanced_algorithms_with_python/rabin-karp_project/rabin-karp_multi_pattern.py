@@ -27,10 +27,12 @@ def rabin_karp_algorithm_multiple(pattern, text):
   return pattern_dict
 patterns = ['ABC', 'BCD', 'CDE', 'DEF']
 text = 'ABCBCDCDEDEFCDE'
-print(rabin_karp_algorithm_multiple(patterns, text))
+# print(rabin_karp_algorithm_multiple(patterns, text))
 def rabin_karp_algorithm_2D(pattern, text):
-  pass
-  #Your code goes here
+  two_d_dict = dict()
+  for t in text:
+    two_d_dict[t] = rabin_karp_algorithm_multiple(pattern, t)
+  return two_d_dict
 pattern = ['ABC', 'GHI']
 text = ['ABCDEF', 'GHIJKL', 'MNOPQR', 'STUVWX', 'YZABCD', 'EFGHIJ', 'KLMNOP']
 print(rabin_karp_algorithm_2D(pattern, text))
