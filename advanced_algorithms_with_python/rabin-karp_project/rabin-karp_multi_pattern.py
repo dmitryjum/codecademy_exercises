@@ -69,7 +69,7 @@ patterns = ['ABC', 'BCD', 'CDE', 'DEF']
 text = 'ABCBCDCDEDEFCDE'
 # print(rabin_karp_algorithm_multiple(patterns, text))
 def rabin_karp_algorithm_2D(pattern, text):
-  two_d_dict = dict()
+  occurrences = 0
   m1 = len(pattern)
   m2 = len(pattern[0])
   n1 = len(text)
@@ -79,6 +79,8 @@ def rabin_karp_algorithm_2D(pattern, text):
   pattern_hash = 0
   for i in range(m1): #0..2
       pattern_hash += polynomial_hash(pattern[i])*(10**(m1 - i - 1))
+  # print(pattern_hash)
+
   all_hashes = [[0 for j in range(n2 - m2 + 1)] for i in range(n1)]
   for i in range(n1):
     substring_hash = polynomial_hash(text[i][:m2])
@@ -87,11 +89,28 @@ def rabin_karp_algorithm_2D(pattern, text):
       previous_hash = substring_hash #starts with the first hash for each i in n1
       substring_hash = polynomial_rolling_hash(previous_hash, text[i][j], text[i][j + m2], m2)
       all_hashes[i][j + 1] = substring_hash
+
   print(all_hashes)
+  for j in range(n2 - m2 + 1):
+    column_hash = 0
+    for i in range(m1):
+        column_hash += all_hashes[i][j]*(10**(m1 - i - 1))
+    if (column_hash == pattern_hash):
+        occurrences += 1
+    for i in range(n1 - m1):
+      previous_hash = column_hash
+      column_hash = (previous_hash - all_hashes[i][j]*(10**(m1 - 1)))*10 + all_hashes[i + m1][j]
+      if (column_hash == pattern_hash):
+          occurrences += 1
+  return occurrences
 
 pattern = ['ABC', 'GHI']
 text = ['ABCDEF', 'GHIJKL', 'MNOPQR', 'STUVWX', 'YZABCD', 'EFGHIJ', 'KLMNOP']
 print(rabin_karp_algorithm_2D(pattern, text))
+
+
+
+
 
 
 
